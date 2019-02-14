@@ -1,0 +1,15 @@
+#gameStarWars.container {
+    background-image: url("../images/deathstar.jpg");
+    width: 900px;
+    height: 600px;
+    background-size:     cover;                      
+    background-repeat:   no-repeat;
+    background-position: center center;
+    color: white;
+    padding: 1rem;
+}
+
+.characters {
+    width: 150px;
+    color: black;
+}
