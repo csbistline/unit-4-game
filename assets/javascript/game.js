@@ -10,14 +10,17 @@ $(document).ready(function () {
     }
 
     // GLOBAL VARIABLES
-    var charObiWan;
-    var charLuke;
-    var charHan;
-    var charMaul;
-    var charVader;
-    var allCharacters;
-    var isHeroSelected;
-    var isOpponentSelected;
+    var charObiWan;                 // Obi Wan
+    var charLuke;                   // Luke
+    var charHan;                    // Han
+    var charMaul;                   // Maul
+    var charVader;                  // Vader
+    var allCharacters;              // Array containing all chars
+    var isHeroSelected;             // flag for hero selected
+    var isOpponentSelected;         // flag for opponent selected
+    var playerChar;                 // player's choice of character/opponent
+    var opponentChar;               // opponent choice of character
+
 
     // Create the Character objects
     function initChars() {
@@ -35,35 +38,17 @@ $(document).ready(function () {
         for (var i = 0; i < allCharacters.length; i++) {
             var selectStr = "#card" + i;
             var newChar = $(selectStr);
-            // Create a new card
-            newChar.addClass("card characters mr-2");
-            newChar.attr("data-name", allCharacters[i].charName);
-
-
-            // // Create the HTML for the image
-            var cardImage = $("<img>")
-            cardImage.attr("src", allCharacters[i].charImage);
-            cardImage.addClass("card-img-top mb-1")
-
-            // // Create the HTML for the body and name and HP
-            var cardBody = $("<div>");
-            cardBody.addClass("card-body text-center m-0 p-0");
-            var cardTitle = $("<h6>");
-            cardTitle.addClass("card-title text-center m-0 p-0").text(allCharacters[i].charName);
-            var cardHP = $("<p>");
-            cardHP.addClass("card-text text-center m-0 p-0").text("HP: " + allCharacters[i].hitPoints)
-
-
-            // Append it to the target area
-            newChar.append(cardImage, cardBody, cardTitle, cardHP);
-
+            // debugger;
+            drawCharacter(newChar, allCharacters[i]);
         };
     };
+
+    // BEGIN THE GAME
     initChars();
 
 
+    // CHARACTER CLICK HANDLER
     $(".characters").on("click", function () {
-        var playerChar;
         var playerChoice = ($(this).attr("data-name"));
         console.log("You clicked", playerChoice);
 
@@ -99,40 +84,39 @@ $(document).ready(function () {
         // check flags to see if hero and opponent have been seleceted
         if (!isHeroSelected) {
             var newChar = $("#playerChararcter");
+            $("#vsText").removeClass("d-none");
             isHeroSelected = true;
         } else if (!isOpponentSelected) {
             var newChar = $("#opponentCharacter");
+            $("#messageArea").removeClass("d-none");
             isOpponentSelected = true;
         } else {
             return;
         }
 
-        // THIS WHOLE PART SHOULD BE A FUNCTION WHICH GETS PASSED A PARAMETER OF NEWCHAR
-        // Create a new card
-        newChar.addClass("card characters");
-        newChar.attr("data-name", playerChar.charName);
+        drawCharacter(newChar, playerChar);
+    });
 
+    function drawCharacter(where, whatChar) {
+        where.addClass("card characters px-0 mx-1");
+        where.attr("data-name", whatChar.charName);
 
         // // Create the HTML for the image
         var cardImage = $("<img>")
-        cardImage.attr("src", playerChar.charImage);
+        cardImage.attr("src", whatChar.charImage);
         cardImage.addClass("card-img-top mb-1")
 
         // // Create the HTML for the body and name and HP
         var cardBody = $("<div>");
         cardBody.addClass("card-body text-center m-0 p-0");
         var cardTitle = $("<h6>");
-        cardTitle.addClass("card-title text-center m-0 p-0").text(playerChar.charName);
+        cardTitle.addClass("card-title text-center m-0 p-0").text(whatChar.charName);
         var cardHP = $("<p>");
-        cardHP.addClass("card-text text-center m-0 p-0").text("HP: " + playerChar.hitPoints)
-
+        cardHP.addClass("card-text text-center m-0 p-0").text("HP: " + whatChar.hitPoints)
 
         // Append it to the target area
-        newChar.append(cardImage, cardBody, cardTitle, cardHP);
-
-
-
-    });
+        where.append(cardImage, cardBody, cardTitle, cardHP);
+    };
 
 
 });

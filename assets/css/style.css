@@ -11,6 +11,16 @@
 }
 
 .characters {
-    width: 150px;
+    /* width: 100%; */
     color: black;
 }
+
+.card-img-top {
+    width: 100%;
+    object-fit: cover;
+}
+
+/* #vsText {
+    visibility: hidden;
+    display: none;
+} */
