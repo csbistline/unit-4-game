@@ -20,12 +20,16 @@ $(document).ready(function () {
     var isOpponentSelected;         // flag for opponent selected
     var playerChar;                 // player's choice of character/opponent
     var opponentChar;               // opponent choice of character
-
+    var opponentsLeft;                 // how many opponents have you defeated
+    var isGameOver = false;
+    console.log(isGameOver);
 
     // Create the Character objects
     function initChars() {
+        console.log("Initializing game, resetting variables")
         isHeroSelected = false;
         isOpponentSelected = false;
+        isGameOver = false;
 
         charObiWan = new CharacterObject("Obi-Wan Kenobi", 120, 8, 8, "assets/images/obiwan.jpg");
         charLuke = new CharacterObject("Luke Skywalker", 140, 12, 12, "assets/images/lukeskywalker.jpg");
@@ -33,12 +37,13 @@ $(document).ready(function () {
         charMaul = new CharacterObject("Darth Maul", 150, 15, 15, "assets/images/darthmaul.jpg");
         charVader = new CharacterObject("Darth Vader", 180, 20, 20, "assets/images/darthvader.jpg");
         allCharacters = [charObiWan, charLuke, charHan, charMaul, charVader];
+        opponentsLeft= allCharacters.length - 1;
+        console.log("Opponents remaining:", opponentsLeft);
 
         // Create the character cards on screen
         for (var i = 0; i < allCharacters.length; i++) {
             var selectStr = "#card" + i;
             var newChar = $(selectStr);
-            // debugger;
             drawCharacter(newChar, allCharacters[i]);
         };
     };
@@ -47,57 +52,98 @@ $(document).ready(function () {
     initChars();
 
 
-    // CHARACTER CLICK HANDLER
+    // CHARACTER SELECT CLICK HANDLER
     $(".characters").on("click", function () {
         var playerChoice = ($(this).attr("data-name"));
         console.log("You clicked", playerChoice);
-
+        // debugger;
         // when a character card is clicked, move it to the active player area and hide it from the selectArea
         // first determine which character was clicked, as long as both characters haven't been selected yet
-        if (!isHeroSelected || !isOpponentSelected) {
+        if (!isHeroSelected) {
+            isHeroSelected = true;
             switch (playerChoice) {
                 case "Obi-Wan Kenobi":
                     playerChar = charObiWan;
-                    console.log($("#card0"));
                     $("#card0").hide();
+                    var newChar = $("#playerChararcter");
+                    $("#vsText").removeClass("d-none");
+                    drawCharacter(newChar, playerChar, "hero");
                     break;
                 case "Luke Skywalker":
                     playerChar = charLuke;
                     $("#card1").hide();
+                    var newChar = $("#playerChararcter");
+                    $("#vsText").removeClass("d-none");
+                    drawCharacter(newChar, playerChar, "hero");
                     break;
                 case "Han Solo":
                     playerChar = charHan;
                     $("#card2").hide();
+                    var newChar = $("#playerChararcter");
+                    $("#vsText").removeClass("d-none");
+                    drawCharacter(newChar, playerChar, "hero");
                     break;
                 case "Darth Maul":
                     playerChar = charMaul;
                     $("#card3").hide();
+                    var newChar = $("#playerChararcter");
+                    $("#vsText").removeClass("d-none");
+                    drawCharacter(newChar, playerChar, "hero");
                     break;
                 case "Darth Vader":
                     playerChar = charVader;
                     $("#card4").hide();
+                    var newChar = $("#playerChararcter");
+                    $("#vsText").removeClass("d-none");
+                    drawCharacter(newChar, playerChar, "hero");
                     break;
             }
-        }
-
-        // Now determine where the character goes on the screen, playerCharacter or opponentCharacter
-        // check flags to see if hero and opponent have been seleceted
-        if (!isHeroSelected) {
-            var newChar = $("#playerChararcter");
-            $("#vsText").removeClass("d-none");
-            isHeroSelected = true;
         } else if (!isOpponentSelected) {
-            var newChar = $("#opponentCharacter");
-            $("#messageArea").removeClass("d-none");
             isOpponentSelected = true;
+            switch (playerChoice) {
+                case "Obi-Wan Kenobi":
+                    opponentChar = charObiWan;
+                    $("#card0").hide();
+                    var newChar = $("#opponentCharacter");
+                    $("#messageArea").removeClass("d-none");
+                    drawCharacter(newChar, opponentChar, "badguy");
+                    break;
+                case "Luke Skywalker":
+                    opponentChar = charLuke;
+                    $("#card1").hide();
+                    var newChar = $("#opponentCharacter");
+                    $("#messageArea").removeClass("d-none");
+                    drawCharacter(newChar, opponentChar, "badguy");
+                    break;
+                case "Han Solo":
+                    opponentChar = charHan;
+                    $("#card2").hide();
+                    var newChar = $("#opponentCharacter");
+                    $("#messageArea").removeClass("d-none");
+                    drawCharacter(newChar, opponentChar, "badguy");
+                    break;
+                case "Darth Maul":
+                    opponentChar = charMaul;
+                    $("#card3").hide();
+                    var newChar = $("#opponentCharacter");
+                    $("#messageArea").removeClass("d-none");
+                    drawCharacter(newChar, opponentChar, "badguy");
+                    break;
+                case "Darth Vader":
+                    opponentChar = charVader;
+                    $("#card4").hide();
+                    var newChar = $("#opponentCharacter");
+                    $("#messageArea").removeClass("d-none");
+                    drawCharacter(newChar, opponentChar, "badguy");
+                    break;
+            }
         } else {
             return;
         }
-
-        drawCharacter(newChar, playerChar);
     });
 
-    function drawCharacter(where, whatChar) {
+    function drawCharacter(where, whatChar, whichSide) {
+        where.empty();
         where.addClass("card characters px-0 mx-1");
         where.attr("data-name", whatChar.charName);
 
@@ -112,11 +158,61 @@ $(document).ready(function () {
         var cardTitle = $("<h6>");
         cardTitle.addClass("card-title text-center m-0 p-0").text(whatChar.charName);
         var cardHP = $("<p>");
-        cardHP.addClass("card-text text-center m-0 p-0").text("HP: " + whatChar.hitPoints)
+        cardHP.addClass("card-text text-center m-0 p-0").addClass(whichSide).text("HP: " + whatChar.hitPoints)
 
         // Append it to the target area
         where.append(cardImage, cardBody, cardTitle, cardHP);
+        where.show();
     };
+
+    // CHARACTER ATTACK CLICK HANDLER
+    $("#playerChararcter").on("click", function () {
+        if (isHeroSelected && isOpponentSelected) {
+            // make sure character is alive
+            if (playerChar.hitPoints > 0) {
+                $("#messageTitle").text("The battle has begun!")
+                // attack the opponent
+                opponentChar.hitPoints -= playerChar.attackPower;
+                $("#messageText").text(playerChar.charName + " attacks for " + playerChar.attackPower);
+                // decrease the HP of opponent
+                $(".badguy").text("HP: " + opponentChar.hitPoints);
+                // increase base attack power
+                playerChar.attackPower += playerChar.counterAttackPower;
+
+                //opponent counter attack if not dead
+                if (opponentChar.hitPoints > 0) {
+                    playerChar.hitPoints -= opponentChar.counterAttackPower;
+                    $("#messageText").append("<p>" + opponentChar.charName + " attacks for " + opponentChar.counterAttackPower + "</p>");
+                    $(".hero").text("HP: " + playerChar.hitPoints);
+
+                    // check if you died
+                    if (playerChar.hitPoints <= 0) {
+                        $("#messageTitle").text("You have been defeated by " + opponentChar.charName + "!")
+                        $("#messageText").append("<p>GAME OVER</p>");
+                    }
+                    
+                } 
+                // otherwise you've won the battle
+                else {
+                    isOpponentSelected = false;
+                    opponentsLeft--;
+                    $("#opponentCharacter").empty();
+                    $("#messageTitle").text("You have defeated " + opponentChar.charName + "!")
+                    $("#messageText").text("Select a new opponent to battle.");
+                    if (opponentsLeft === 0) {
+                        // debugger;
+                        isGameOver = confirm("YOU'VE DEFEATED ALL THE ENEMIES! PLAY AGAIN?");
+                        console.log(isGameOver);
+                        if (isGameOver) {
+                            initChars();
+                        };
+                    }
+
+                }
+            }
+        };
+    });
+
 
 
 });
