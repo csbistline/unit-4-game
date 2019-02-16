@@ -20,7 +20,7 @@ $(document).ready(function () {
     var isOpponentSelected;         // flag for opponent selected
     var playerChar;                 // player's choice of character/opponent
     var opponentChar;               // opponent choice of character
-    var opponentsLeft;                 // how many opponents have you defeated
+    var opponentsLeft;              // how many opponents have you defeated
     var isGameOver = false;
     console.log(isGameOver);
 
@@ -37,7 +37,7 @@ $(document).ready(function () {
         charMaul = new CharacterObject("Darth Maul", 150, 15, 15, "assets/images/darthmaul.jpg");
         charVader = new CharacterObject("Darth Vader", 180, 20, 20, "assets/images/darthvader.jpg");
         allCharacters = [charObiWan, charLuke, charHan, charMaul, charVader];
-        opponentsLeft= allCharacters.length - 1;
+        opponentsLeft = allCharacters.length - 1;
         console.log("Opponents remaining:", opponentsLeft);
 
         // Create the character cards on screen
@@ -49,11 +49,17 @@ $(document).ready(function () {
     };
 
     // BEGIN THE GAME
-    initChars();
+    // initChars();
+
+    $("#btnStart").on("click", function () {
+        initChars();
+        $("#btnStart").hide();
+    });
 
 
     // CHARACTER SELECT CLICK HANDLER
-    $(".characters").on("click", function () {
+    $(document).on("click", ".characters", function () {
+
         var playerChoice = ($(this).attr("data-name"));
         console.log("You clicked", playerChoice);
         // debugger;
@@ -161,7 +167,7 @@ $(document).ready(function () {
 
     function drawCharacter(where, whatChar, whichSide) {
         where.empty();
-        where.addClass("card characters px-0 mx-1");
+        where.addClass("card px-0 mx-1");
         where.attr("data-name", whatChar.charName);
 
         // // Create the HTML for the image
@@ -208,8 +214,8 @@ $(document).ready(function () {
                     if (playerChar.hitPoints <= 0) {
                         $(".introMessage").text("You have been defeated by " + opponentChar.charName + "! GAME OVER!")
                     }
-                    
-                } 
+
+                }
                 // otherwise you've won the battle
                 else {
                     isOpponentSelected = false;
@@ -218,12 +224,14 @@ $(document).ready(function () {
                     $("#messageTitle").text("You won!")
                     $(".introMessage").text("You have defeated " + opponentChar.charName + "! " + "Select a new opponent to battle.")
                     // $("#messageText").text("Select a new opponent to battle.");
-                    
+
                     //You've won the game
                     if (opponentsLeft === 0) {
                         // debugger;
                         isGameOver = true;
-                        $(".introMessage").text("YOU'VE DEFEATED ALL THE ENEMIES!")
+                        $(".introMessage").text("YOU HAVE DEFEATED ALL THE ENEMIES!")
+                        $("#btnStart").show().text("PLAY AGAIN?");
+                        // need to clear active players area
                     }
 
                 }

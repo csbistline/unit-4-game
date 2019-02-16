@@ -23,27 +23,29 @@
 
     <div id="selectArea" class="row justify-content-md-center">
       <!-- Characters go here -->
-      <div id="card0" class="col-2"></div>
-      <div id="card1" class="col-2"></div>
-      <div id="card2" class="col-2"></div>
-      <div id="card3" class="col-2"></div>
-      <div id="card4" class="col-2"></div>
+      <div id="card0" class="col-2 characters"></div>
+      <div id="card1" class="col-2 characters"></div>
+      <div id="card2" class="col-2 characters"></div>
+      <div id="card3" class="col-2 characters"></div>
+      <div id="card4" class="col-2 characters"></div>
       <!-- <div id="card5" class="col-2"></div> -->
 
     </div>
 
     <div id="gameArea" class="row mt-4 container justify-content-md-center">
-      <div id="playerChararcter" class="col-3"></div>
+      <div id="playerChararcter" class="col-3 activeCharacter"></div>
       <div id="vsText" class="col-2 pt-5 d-none">
         <h5 class="align-middle">VS</h5>
       </div>
-      <div id="opponentCharacter" class="col-3"></div>
+      <div id="opponentCharacter" class="col-3 activeCharacter"></div>
       <div id="messageArea" class="col-3 d-none card mx-1">
         <b id="messageTitle">Click on your hero to begin the battle!</b>
         <p id="messageText"></p>
       </div>
 
     </div>
+    <button type="button" class="btn btn-outline-dark mt-3" id="btnStart">START GAME</button>
+
     <div class="row mx-auto audio-container">
       <h6 id="audio-label">Audio controls</h6>
       <audio id="myAudio" controls class="mx-auto">
