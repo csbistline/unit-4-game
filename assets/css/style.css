@@ -33,7 +33,6 @@
 }
 
 .characters {
-    /* width: 100%; */
     color: black;
 }
 
@@ -74,10 +73,3 @@ p {
     margin-bottom: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }  
-
-
-
-/* #vsText {
-    visibility: hidden;
-    display: none;
-} */
