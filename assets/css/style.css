@@ -77,3 +77,7 @@ p {
 .activeCharacter {
     color: black;
 }
+
+.gameArea {
+    display: none;
+}

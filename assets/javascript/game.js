@@ -52,7 +52,11 @@ $(document).ready(function () {
     // initChars();
 
     $("#btnStart").on("click", function () {
+        $(".activeCharacter").empty();
+        $("#messageTitle").text("Click on your hero to begin the battle!");
+        $("#messageText").text("");
         initChars();
+        $(".gameArea").hide();
         $("#btnStart").hide();
     });
 
@@ -69,41 +73,44 @@ $(document).ready(function () {
             isHeroSelected = true;
             var selectAudio = new Audio("assets/sounds/LightsaberTurnOn.mp3");
             selectAudio.play();
+            $("#vsText").show();
+            // CLEAN UP THESE BLOCKS WITH A REUSABLE FUNCTION
 
             switch (playerChoice) {
                 case "Obi-Wan Kenobi":
                     playerChar = charObiWan;
                     $("#card0").fadeOut("slow");
                     var newChar = $("#playerChararcter");
-                    $("#vsText").removeClass("d-none");
+                    // $("#vsText").removeClass("d-none");
+
                     drawCharacter(newChar, playerChar, "hero");
                     break;
                 case "Luke Skywalker":
                     playerChar = charLuke;
                     $("#card1").fadeOut("slow");
                     var newChar = $("#playerChararcter");
-                    $("#vsText").removeClass("d-none");
+                    // $("#vsText").removeClass("d-none");
                     drawCharacter(newChar, playerChar, "hero");
                     break;
                 case "Han Solo":
                     playerChar = charHan;
                     $("#card2").fadeOut("slow");
                     var newChar = $("#playerChararcter");
-                    $("#vsText").removeClass("d-none");
+                    // $("#vsText").removeClass("d-none");
                     drawCharacter(newChar, playerChar, "hero");
                     break;
                 case "Darth Maul":
                     playerChar = charMaul;
                     $("#card3").fadeOut("slow");
                     var newChar = $("#playerChararcter");
-                    $("#vsText").removeClass("d-none");
+                    // $("#vsText").removeClass("d-none");
                     drawCharacter(newChar, playerChar, "hero");
                     break;
                 case "Darth Vader":
                     playerChar = charVader;
                     $("#card4").fadeOut("slow");
                     var newChar = $("#playerChararcter");
-                    $("#vsText").removeClass("d-none");
+                    // $("#vsText").removeClass("d-none");
                     drawCharacter(newChar, playerChar, "hero");
                     break;
             }
@@ -111,13 +118,16 @@ $(document).ready(function () {
             isOpponentSelected = true;
             var selectAudio = new Audio("assets/sounds/LightsaberTurnOn.mp3");
             selectAudio.play();
+            $("#messageArea").show();
+
+            // CLEAN UP THESE BLOCKS WITH A REUSABLE FUNCTION
 
             switch (playerChoice) {
                 case "Obi-Wan Kenobi":
                     opponentChar = charObiWan;
                     $("#card0").fadeOut("slow");
                     var newChar = $("#opponentCharacter");
-                    $("#messageArea").removeClass("d-none");
+                    // $("#messageArea").removeClass("d-none");
                     drawCharacter(newChar, opponentChar, "badguy");
                     $("#messageTitle").text("Prepare to battle!");
                     $("#messageText").empty();
@@ -127,7 +137,7 @@ $(document).ready(function () {
                     opponentChar = charLuke;
                     $("#card1").fadeOut("slow");
                     var newChar = $("#opponentCharacter");
-                    $("#messageArea").removeClass("d-none");
+                    // $("#messageArea").removeClass("d-none");
                     drawCharacter(newChar, opponentChar, "badguy");
                     $("#messageTitle").text("Prepare to battle!");
                     $("#messageText").empty();
@@ -136,7 +146,7 @@ $(document).ready(function () {
                     opponentChar = charHan;
                     $("#card2").fadeOut("slow");
                     var newChar = $("#opponentCharacter");
-                    $("#messageArea").removeClass("d-none");
+                    // $("#messageArea").removeClass("d-none");
                     drawCharacter(newChar, opponentChar, "badguy");
                     $("#messageTitle").text("Prepare to battle!");
                     $("#messageText").empty();
@@ -145,7 +155,7 @@ $(document).ready(function () {
                     opponentChar = charMaul;
                     $("#card3").fadeOut("slow");
                     var newChar = $("#opponentCharacter");
-                    $("#messageArea").removeClass("d-none");
+                    // $("#messageArea").removeClass("d-none");
                     drawCharacter(newChar, opponentChar, "badguy");
                     $("#messageTitle").text("Prepare to battle!");
                     $("#messageText").empty();
@@ -154,7 +164,7 @@ $(document).ready(function () {
                     opponentChar = charVader;
                     $("#card4").fadeOut("slow");
                     var newChar = $("#opponentCharacter");
-                    $("#messageArea").removeClass("d-none");
+                    // $("#messageArea").removeClass("d-none");
                     drawCharacter(newChar, opponentChar, "badguy");
                     $("#messageTitle").text("Prepare to battle!");
                     $("#messageText").empty();
@@ -231,7 +241,7 @@ $(document).ready(function () {
                         isGameOver = true;
                         $(".introMessage").text("YOU HAVE DEFEATED ALL THE ENEMIES!")
                         $("#btnStart").show().text("PLAY AGAIN?");
-                        // need to clear active players area
+
                     }
 
                 }
