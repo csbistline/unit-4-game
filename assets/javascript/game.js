@@ -61,38 +61,41 @@ $(document).ready(function () {
         // first determine which character was clicked, as long as both characters haven't been selected yet
         if (!isHeroSelected) {
             isHeroSelected = true;
+            var selectAudio = new Audio("assets/sounds/LightsaberTurnOn.mp3");
+            selectAudio.play();
+
             switch (playerChoice) {
                 case "Obi-Wan Kenobi":
                     playerChar = charObiWan;
-                    $("#card0").hide();
+                    $("#card0").fadeOut("slow");
                     var newChar = $("#playerChararcter");
                     $("#vsText").removeClass("d-none");
                     drawCharacter(newChar, playerChar, "hero");
                     break;
                 case "Luke Skywalker":
                     playerChar = charLuke;
-                    $("#card1").hide();
+                    $("#card1").fadeOut("slow");
                     var newChar = $("#playerChararcter");
                     $("#vsText").removeClass("d-none");
                     drawCharacter(newChar, playerChar, "hero");
                     break;
                 case "Han Solo":
                     playerChar = charHan;
-                    $("#card2").hide();
+                    $("#card2").fadeOut("slow");
                     var newChar = $("#playerChararcter");
                     $("#vsText").removeClass("d-none");
                     drawCharacter(newChar, playerChar, "hero");
                     break;
                 case "Darth Maul":
                     playerChar = charMaul;
-                    $("#card3").hide();
+                    $("#card3").fadeOut("slow");
                     var newChar = $("#playerChararcter");
                     $("#vsText").removeClass("d-none");
                     drawCharacter(newChar, playerChar, "hero");
                     break;
                 case "Darth Vader":
                     playerChar = charVader;
-                    $("#card4").hide();
+                    $("#card4").fadeOut("slow");
                     var newChar = $("#playerChararcter");
                     $("#vsText").removeClass("d-none");
                     drawCharacter(newChar, playerChar, "hero");
@@ -100,41 +103,55 @@ $(document).ready(function () {
             }
         } else if (!isOpponentSelected) {
             isOpponentSelected = true;
+            var selectAudio = new Audio("assets/sounds/LightsaberTurnOn.mp3");
+            selectAudio.play();
+
             switch (playerChoice) {
                 case "Obi-Wan Kenobi":
                     opponentChar = charObiWan;
-                    $("#card0").hide();
+                    $("#card0").fadeOut("slow");
                     var newChar = $("#opponentCharacter");
                     $("#messageArea").removeClass("d-none");
                     drawCharacter(newChar, opponentChar, "badguy");
+                    $("#messageTitle").text("Prepare to battle!");
+                    $("#messageText").empty();
+
                     break;
                 case "Luke Skywalker":
                     opponentChar = charLuke;
-                    $("#card1").hide();
+                    $("#card1").fadeOut("slow");
                     var newChar = $("#opponentCharacter");
                     $("#messageArea").removeClass("d-none");
                     drawCharacter(newChar, opponentChar, "badguy");
+                    $("#messageTitle").text("Prepare to battle!");
+                    $("#messageText").empty();
                     break;
                 case "Han Solo":
                     opponentChar = charHan;
-                    $("#card2").hide();
+                    $("#card2").fadeOut("slow");
                     var newChar = $("#opponentCharacter");
                     $("#messageArea").removeClass("d-none");
                     drawCharacter(newChar, opponentChar, "badguy");
+                    $("#messageTitle").text("Prepare to battle!");
+                    $("#messageText").empty();
                     break;
                 case "Darth Maul":
                     opponentChar = charMaul;
-                    $("#card3").hide();
+                    $("#card3").fadeOut("slow");
                     var newChar = $("#opponentCharacter");
                     $("#messageArea").removeClass("d-none");
                     drawCharacter(newChar, opponentChar, "badguy");
+                    $("#messageTitle").text("Prepare to battle!");
+                    $("#messageText").empty();
                     break;
                 case "Darth Vader":
                     opponentChar = charVader;
-                    $("#card4").hide();
+                    $("#card4").fadeOut("slow");
                     var newChar = $("#opponentCharacter");
                     $("#messageArea").removeClass("d-none");
                     drawCharacter(newChar, opponentChar, "badguy");
+                    $("#messageTitle").text("Prepare to battle!");
+                    $("#messageText").empty();
                     break;
             }
         } else {
@@ -162,7 +179,7 @@ $(document).ready(function () {
 
         // Append it to the target area
         where.append(cardImage, cardBody, cardTitle, cardHP);
-        where.show();
+        where.fadeIn("slow");
     };
 
     // CHARACTER ATTACK CLICK HANDLER
@@ -172,6 +189,8 @@ $(document).ready(function () {
             if (playerChar.hitPoints > 0) {
                 $("#messageTitle").text("The battle has begun!")
                 // attack the opponent
+                var selectAudio = new Audio("assets/sounds/LightsaberClash.mp3");
+                selectAudio.play();
                 opponentChar.hitPoints -= playerChar.attackPower;
                 $("#messageText").text(playerChar.charName + " attacks for " + playerChar.attackPower);
                 // decrease the HP of opponent
@@ -187,8 +206,7 @@ $(document).ready(function () {
 
                     // check if you died
                     if (playerChar.hitPoints <= 0) {
-                        $("#messageTitle").text("You have been defeated by " + opponentChar.charName + "!")
-                        $("#messageText").append("<p>GAME OVER</p>");
+                        $(".introMessage").text("You have been defeated by " + opponentChar.charName + "! GAME OVER!")
                     }
                     
                 } 
@@ -196,16 +214,16 @@ $(document).ready(function () {
                 else {
                     isOpponentSelected = false;
                     opponentsLeft--;
-                    $("#opponentCharacter").empty();
-                    $("#messageTitle").text("You have defeated " + opponentChar.charName + "!")
-                    $("#messageText").text("Select a new opponent to battle.");
+                    // $("#opponentCharacter").empty();
+                    $("#messageTitle").text("You won!")
+                    $(".introMessage").text("You have defeated " + opponentChar.charName + "! " + "Select a new opponent to battle.")
+                    // $("#messageText").text("Select a new opponent to battle.");
+                    
+                    //You've won the game
                     if (opponentsLeft === 0) {
                         // debugger;
-                        isGameOver = confirm("YOU'VE DEFEATED ALL THE ENEMIES! PLAY AGAIN?");
-                        console.log(isGameOver);
-                        if (isGameOver) {
-                            initChars();
-                        };
+                        isGameOver = true;
+                        $(".introMessage").text("YOU'VE DEFEATED ALL THE ENEMIES!")
                     }
 
                 }

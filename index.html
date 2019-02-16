@@ -9,6 +9,9 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
     integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
   <link rel="stylesheet" href="assets/css/style.css">
+  <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+    crossorigin="anonymous"></script>
+
 </head>
 
 <body>
@@ -16,7 +19,7 @@
 
   <div class="container" id="gameStarWars">
     <h1>Star Wars RPG</h1>
-    <h5 class="mb-3">Click on your hero, then chose an opponent</h5>
+    <h5 class="mb-3 introMessage">Click on your hero, then chose an opponent</h5>
 
     <div id="selectArea" class="row justify-content-md-center">
       <!-- Characters go here -->
@@ -29,23 +32,32 @@
 
     </div>
 
-    <div id="gameArea" class="row mt-4 container">
+    <div id="gameArea" class="row mt-4 container justify-content-md-center">
       <div id="playerChararcter" class="col-3"></div>
-      <div id="vsText" class="col-2 pt-5 d-none"><h5 class="align-middle">VS</h5></div>
+      <div id="vsText" class="col-2 pt-5 d-none">
+        <h5 class="align-middle">VS</h5>
+      </div>
       <div id="opponentCharacter" class="col-3"></div>
-      <div id="messageArea" class="col-3 d-none card characters mx-1">
+      <div id="messageArea" class="col-3 d-none card mx-1">
         <b id="messageTitle">Click on your hero to begin the battle!</b>
         <p id="messageText"></p>
       </div>
 
     </div>
+    <div class="row mx-auto audio-container">
+      <h6 id="audio-label">Audio controls</h6>
+      <audio id="myAudio" controls class="mx-auto">
+        <source src="assets/sounds/StarWars.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+      </audio>
+    </div>
 
   </div>
 
   <!-- Javascript for bootstrap -->
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+  <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
     integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-    crossorigin="anonymous"></script>
+    crossorigin="anonymous"></script> -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
     integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
     crossorigin="anonymous"></script>
